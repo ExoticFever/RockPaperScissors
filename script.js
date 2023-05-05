@@ -1,3 +1,4 @@
+//Generate computer choice between rock, paper, and scissors
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
 
@@ -14,75 +15,85 @@ function getComputerChoice() {
   return randomNumber;
 }
 
+//Declaring the variables
 let playerScore = 0;
 let computerScore = 0;
+let playerChoice;
 let playerSelection;
 let computerSelection;
 let gameWinner;
 
+const winnerMsg = document.querySelector(".winnerMessage");
+const scoreBoard = document.querySelector(".scoreBoard");
+const result = document.querySelector(".result");
+const playerChoicesBtn = document.querySelectorAll(".playerChoices");
+
+//Check what button does the player choose
+playerChoicesBtn.forEach((btn) =>
+  btn.addEventListener("click", () => {
+    //Assign playerSelection into the button that player chose
+    playerChoice = btn.getAttribute("id").toUpperCase();
+    playRound();
+  })
+);
+//Function to start the game
 function playRound(playerSelection, computerSelection) {
-  playerSelection = prompt("Choose between rock, paper, and scissors!");
-
-  while (
-    playerSelection.toUpperCase() != "ROCK" &&
-    playerSelection.toUpperCase() != "PAPER" &&
-    playerSelection.toUpperCase() != "SCISSORS"
-  ) {
-    playerSelection = prompt(
-      "You type in wrong answer, please choose between rock, paper, and scissors!"
-    );
-  }
-
+  scoreBoard.textContent = "";
+  result.textContent = "";
+  winnerMsg.textContent = "";
+  playerSelection = playerChoice;
   computerSelection = getComputerChoice();
 
-  if (playerSelection.toUpperCase() === "ROCK") {
+  console.log(playerSelection);
+  console.log(computerSelection);
+
+  if (playerSelection === "ROCK") {
     if (computerSelection === "ROCK") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      result.textContent = `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (computerSelection === "SCISSORS") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
     } else if (computerSelection === "PAPER") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      result.textContent = `You lose, ${computerSelection} beats ${playerSelection}`;
     }
-  } else if (playerSelection.toUpperCase() === "PAPER") {
+  } else if (playerSelection === "PAPER") {
     if (computerSelection === "PAPER") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      result.textContent = `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (computerSelection === "ROCK") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
     } else if (computerSelection === "SCISSORS") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      result.textContent = `You lose, ${computerSelection} beats ${playerSelection}`;
     }
-  } else if (playerSelection.toUpperCase() === "SCISSORS") {
+  } else if (playerSelection === "SCISSORS") {
     if (computerSelection === "SCISSORS") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      result.textContent = `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (computerSelection === "PAPER") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
     } else if (computerSelection === "ROCK") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      result.textContent = `You lose, ${computerSelection} beats ${playerSelection}`;
     }
   }
-}
+  scoreBoard.textContent = `Score : ${playerScore} - ${computerScore}`;
 
-function playGame() {
-  for (i = 0; i < 5; i++) {
-    alert(playRound(playerSelection, computerSelection));
+  if (playerScore === 5 || computerScore === 5) {
+    checkWinner();
+    playerScore = 0;
+    computerScore = 0;
   }
 }
 
+//Checking the winner by comparing the score
 function checkWinner() {
   if (playerScore > computerScore) {
-    return "Congratulations! You beat the computer";
+    winnerMsg.textContent = "Congratulations! You beat the computer";
   } else if (computerScore > playerScore) {
-    return "You lose, try again next time";
+    winnerMsg.textContent = "You lose, try again next time";
   } else {
-    return "It's a tie";
+    winnerMsg.textContent = "It's a tie";
   }
 }
-
-playGame();
-alert(checkWinner());

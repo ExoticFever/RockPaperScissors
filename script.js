@@ -1,3 +1,4 @@
+//Assign computer's choice
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
 
@@ -14,75 +15,80 @@ function getComputerChoice() {
   return randomNumber;
 }
 
+//Declare variables
 let playerScore = 0;
 let computerScore = 0;
 let playerSelection;
 let computerSelection;
 let gameWinner;
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+const rpsBtn = document.querySelectorAll(".rps-btn");
+const resultMsg = document.querySelector("#resultMsg");
+const container = document.querySelector("#container");
+const scoreBoardContainer = document.createElement("div");
+const playerNames = document.createElement("div");
+const scores = document.createElement("div");
+scoreBoardContainer.appendChild(playerNames);
+scoreBoardContainer.appendChild(scores);
+
+rockBtn.addEventListener('click', () => {
+  playRound("rock", computerSelection);
+})
+
+paperBtn.addEventListener('click', () => {
+  playRound("paper", computerSelection);
+})
+
+scissorsBtn.addEventListener('click', () => {
+  playRound("scissors", computerSelection);
+})
+
 
 function playRound(playerSelection, computerSelection) {
-  playerSelection = prompt("Choose between rock, paper, and scissors!");
-
-  while (
-    playerSelection.toUpperCase() != "ROCK" &&
-    playerSelection.toUpperCase() != "PAPER" &&
-    playerSelection.toUpperCase() != "SCISSORS"
-  ) {
-    playerSelection = prompt(
-      "You type in wrong answer, please choose between rock, paper, and scissors!"
-    );
-  }
-
   computerSelection = getComputerChoice();
 
   if (playerSelection.toUpperCase() === "ROCK") {
     if (computerSelection === "ROCK") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      resultMsg.textContent = `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
     } else if (computerSelection === "SCISSORS") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      resultMsg.textContent = `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
     } else if (computerSelection === "PAPER") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      resultMsg.textContent = `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
     }
   } else if (playerSelection.toUpperCase() === "PAPER") {
     if (computerSelection === "PAPER") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      resultMsg.textContent = `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
     } else if (computerSelection === "ROCK") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      resultMsg.textContent = `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
     } else if (computerSelection === "SCISSORS") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      resultMsg.textContent = `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
     }
   } else if (playerSelection.toUpperCase() === "SCISSORS") {
     if (computerSelection === "SCISSORS") {
-      return `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
+      resultMsg.textContent = `It's a tie! ${playerSelection.toUpperCase()} ties with ${computerSelection}`;
     } else if (computerSelection === "PAPER") {
       playerScore += 1;
-      return `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
+      resultMsg.textContent = `You win! ${playerSelection.toUpperCase()} beats ${computerSelection}`;
     } else if (computerSelection === "ROCK") {
       computerScore += 1;
-      return `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
+      resultMsg.textContent = `You lose, ${computerSelection} beats ${playerSelection.toUpperCase()}`;
     }
   }
+
+  container.insertBefore(scoreBoardContainer, resultMsg);
 }
 
-function playGame() {
-  for (i = 0; i < 5; i++) {
-    alert(playRound(playerSelection, computerSelection));
-  }
-}
-
+//Function to check the winner
 function checkWinner() {
-  if (playerScore > computerScore) {
+  if (playerScore == 5) {
     return "Congratulations! You beat the computer";
-  } else if (computerScore > playerScore) {
+  } else if (computerScore == 5) {
     return "You lose, try again next time";
-  } else {
-    return "It's a tie";
   }
 }
-
-playGame();
-alert(checkWinner());

@@ -36,6 +36,8 @@ const restartBtn = document.createElement("button");
 const restartBoard = document.createElement("div");
 const restartMessage = document.createElement("div");
 
+scoreBoardContainer.classList.add("scoreContainer")
+
 rockBtn.addEventListener('click', () => {
   playRound("rock", computerSelection);
 })

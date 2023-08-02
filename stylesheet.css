@@ -1,5 +1,32 @@
-.scoreContainer {
-    width: 100px;
+.gameContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    
+}
+
+
+#container {
+    margin-left: 40%;
+    width: 100%;
+}
+
+.scoreContainer {
+    width: 100px;
+    margin-left: 90px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.players {
+    padding: 5px;
+}
+
+.score,
+.rps-btn,
+#resultMsg {
+    align-self: center;
+    margin-left: 30px;
 }
